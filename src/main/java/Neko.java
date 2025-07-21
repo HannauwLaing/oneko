@@ -14,6 +14,7 @@
  * This is a desktop adaptation of the applet
  * JAVA NEKO V1.0 by Chris Parent, 1999.
  * http://mysite.ncnetwork.net/res8t1xo/class/neko.htm
+ *
  */
 
 import java.awt.BorderLayout;
