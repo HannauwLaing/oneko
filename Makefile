@@ -12,8 +12,6 @@ RESOURCES := $(RES)
 
 # Default target
 all: run
-	echo "Ran all"
-
 
 # Run the program
 run:
@@ -31,6 +29,12 @@ $(BIN)/%.class: $(SRC)/%.java
 clean:
 	rm -rf $(BIN)/*
 
+run-disown:
+	$(MAKE) -C ~/path/to/oneko run 0<&- >/dev/null 2>&1 & disown
+
+
+purge:
+	@pkill -f "^java -cp bin NekoMain$$"; echo "Cats have been purged"
 
 
 
@@ -38,29 +42,3 @@ clean:
 
 
 
-
-
-
-# # Find all Java source files in the project
-# SOURCES := $(shell find src -name "*.java")
-#
-# # JavaFX paths (change path to locally stored location of javafx lib)
-# JAVAFX_SDK := ./javafx-sdk-23.0.2/lib
-# MODULES := javafx.controls,javafx.fxml
-#
-# # JavaFX module path setup
-# MODULE_PATH := --module-path $(JAVAFX_SDK) --add-modules $(MODULES)
-#
-# all: run-Neko
-# 	echo "Run all"
-#
-# run-Neko: compile
-# 	java -cp bin main.java.Neko
-#
-# # Compile all Java sources into bin
-# compile: clean
-# 	javac -d bin -sourcepath src $(SOURCES)
-#
-# # Clean all compiled files
-# clean:
-# 	rm -rf bin/*
