@@ -1,22 +1,41 @@
-oneko
+#oneko (Wayland-Friendly Fork)
 =====
 
-The ever popular kitty-that-follows-your-mouse-pointer toy.
+This is a workaround for a bug on[glreno's original oneko](https://github.com/glreno/oneko).
 
 
-Neko is Japanese for cat. According to  [Wikipedia](https://en.wikipedia.org/wiki/Neko_(software)) it was originally written for the NEC PC-9801.
+In this fork, the cat no longer follows the mouse directly. Instead, it:
+- Moves to **random screen positions**
+- Pauses for **random durations** between movements
 
-There are many many versions. Generally it is considered Public Domain software, so I am placing my fork under the Unlicense.
+A `Makefile` is also included for easier compilation and execution.
 
-This fork is based on [Werner Randelshofer's Java port](http://www.randelshofer.ch/blog/2010/07/screenmate-neko-in-java).
+---
 
-The image files are ancient public domain.
-The Java code for v.1.0 is (c) 2010 Werner Randelhofer.
-The Java code for v.2.0 (c) 2019 Gerald Reno
+##Commands
+=====
+
+### Compile
+From inside the `oneko` directory:
+```bash
+make compile
+```
+### Run
+From inside the `oneko` directory:
+```bash
+make run
+```
+
+### Run and disown cat:
+```bash
+make -C ~/path/to/oneko/ all 0<&- >/dev/null 2>&1 & disown ;
+```
+### Kill all disowned cats:
+```bash
+pkill -f \"^java -cp bin NekoMain$\";clear; echo \"Cats have been purged\
+```
 
 links
 =====
 
-[Download](https://glreno.github.io/oneko)
-[Project wiki](https://github.com/glreno/oneko/wiki)
-
+[original] https://github.com/glreno/oneko

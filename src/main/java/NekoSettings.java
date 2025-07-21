@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2019 Jerry Reno
  * This is public domain software, under the terms of the UNLICENSE
- * http://unlicense.org 
+ * http://unlicense.org
  */
 
 import java.awt.BorderLayout;
@@ -34,97 +34,108 @@ import javax.swing.WindowConstants;
 
 public class NekoSettings {
 
-	// Settings keys:
-	private static final String HELLO = "hello";
-	private static final String TITLE = "windowTitle";
+  // Settings keys:
+  private static final String HELLO = "hello";
+  private static final String TITLE = "windowTitle";
 
-	private static final String TRIGGER_DIST = "triggerDistance";
-	private static final String CATCH_DIST = "catchDistance";
-	private static final String RUN_DIST = "runDistancePerFrame";
-	private static final String OFFSETX = "offsetx";
-	private static final String OFFSETY = "offsety";
+  private static final String TRIGGER_DIST = "triggerDistance";
+  private static final String CATCH_DIST = "catchDistance";
+  private static final String RUN_DIST = "runDistancePerFrame";
+  private static final String OFFSETX = "offsetx";
+  private static final String OFFSETY = "offsety";
 
-	private static final String MAX_FRAMERATE = "maxFramerate";
-	private static final String RUN_FRAMERATE = "runFramerate";
-	private static final String SIT_FRAMERATE = "sitFramerate";
-	private static final String SHARPEN_FRAMERATE = "sharpenFramerate";
-	private static final String SCRATCH_FRAMERATE = "scratchFramerate";
-	private static final String LOAD_FRAMERATE = "loadFramerate";
+  private static final String MAX_FRAMERATE = "maxFramerate";
+  private static final String RUN_FRAMERATE = "runFramerate";
+  private static final String SIT_FRAMERATE = "sitFramerate";
+  private static final String SHARPEN_FRAMERATE = "sharpenFramerate";
+  private static final String SCRATCH_FRAMERATE = "scratchFramerate";
+  private static final String LOAD_FRAMERATE = "loadFramerate";
 
-	private static final String SLEEP_DELAY = "sleepDelay";
-	private static final String YAWN_DELAY = "yawnDelay";
-	private static final String SURPRISE_DELAY = "surpriseDelay";
+  private static final String SLEEP_DELAY = "sleepDelay";
+  private static final String YAWN_DELAY = "yawnDelay";
+  private static final String SURPRISE_DELAY = "surpriseDelay";
 
-	private Settings settings;
-	private int triggerDist;
-	private int catchDist;
-	private int runDist;
-	private int minDelay;
-	private int runDelay;
-	private int sitDelay;
-	private int scratchDelay;
-	private int sharpenDelay;
-	private int loadDelay;
-	private int sleepDelay;
-	private int yawnDelay;
-	private int surpriseDelay;
-	private int offsetX;
-	private int offsetY;
+  private static final String DO_RANDOM_MOV = "doRandomMov";
+  private static final String RANDOM_MIN_SLEEP = "randomSleepTime";
+  private static final String RANDOM_WIN_SLEEP = "randomSleepWindow";
 
-	public NekoSettings() {
-		settings=new Settings("neko.properties");
-		load();
-	}
+  private Settings settings;
+  private int triggerDist;
+  private int catchDist;
+  private int runDist;
+  private int minDelay;
+  private int runDelay;
+  private int sitDelay;
+  private int scratchDelay;
+  private int sharpenDelay;
+  private int loadDelay;
+  private int sleepDelay;
+  private int yawnDelay;
+  private int surpriseDelay;
+  private int offsetX;
+  private int offsetY;
+  private int doRandMov;
+  private int randSleepTime;
+  private int randSleepWindow;
 
-	public String getTitle() { return settings.getString(TITLE);}
+  public NekoSettings() {
+    settings = new Settings("neko.properties");
+    load();
+  }
 
-	/** Convert frames-per-seconds to milliseconds */
-	private int getDelay(String key)
-	{
-		// Convert the framerate settings into milliseconds
-		Integer ret = settings.getInt(key,100);
+  public String getTitle() { return settings.getString(TITLE); }
 
-		return 1000/ret;
-	}
+  /** Convert frames-per-seconds to milliseconds */
+  private int getDelay(String key) {
+    // Convert the framerate settings into milliseconds
+    Integer ret = settings.getInt(key, 100);
 
-	public int getTriggerDist() { return triggerDist;}
-	public int getCatchDist() { return catchDist;}
-	public int getRunDist() { return runDist;}
-	public int getOffsetX() { return offsetX;}
-	public int getOffsetY() { return offsetY;}
-	public int getMinDelay() { return minDelay;}
-	public int getRunDelay() { return runDelay;}
-	public int getSitDelay() { return sitDelay;}
-	public int getScratchDelay() { return scratchDelay;}
-	public int getSharpenDelay() { return sharpenDelay;}
-	public int getLoadDelay() { return loadDelay;}
-	public int getSleepDelay() { return sleepDelay;}
-	public int getYawnDelay() { return yawnDelay;}
-	public int getSurpriseDelay() { return surpriseDelay;}
+    return 1000 / ret;
+  }
 
-	public void load()
-	{
-		settings.load();
-		String hello=settings.getString(HELLO);
-		if ( hello!=null ) System.out.println(hello);
+  public int getTriggerDist() { return triggerDist; }
+  public int getCatchDist() { return catchDist; }
+  public int getRunDist() { return runDist; }
+  public int getOffsetX() { return offsetX; }
+  public int getOffsetY() { return offsetY; }
+  public int getMinDelay() { return minDelay; }
+  public int getRunDelay() { return runDelay; }
+  public int getSitDelay() { return sitDelay; }
+  public int getScratchDelay() { return scratchDelay; }
+  public int getSharpenDelay() { return sharpenDelay; }
+  public int getLoadDelay() { return loadDelay; }
+  public int getSleepDelay() { return sleepDelay; }
+  public int getYawnDelay() { return yawnDelay; }
+  public int getSurpriseDelay() { return surpriseDelay; }
+  public int getDoRandMov() { return doRandMov; }
+  public int getRandSleepTime() { return randSleepTime; }
+  public int getRandSleepWindow() { return randSleepWindow; }
 
-		triggerDist = settings.getInt(TRIGGER_DIST,16);
-		catchDist = settings.getInt(CATCH_DIST,16);
-		runDist = settings.getInt(RUN_DIST,16);
-		offsetX = settings.getInt(OFFSETX,0);
-		offsetY = settings.getInt(OFFSETY,0);
+  public void load() {
+    settings.load();
+    String hello = settings.getString(HELLO);
+    if (hello != null)
+      System.out.println(hello);
 
-		sleepDelay = settings.getInt(SLEEP_DELAY,1000);
-		yawnDelay = settings.getInt(YAWN_DELAY,1000);
-		surpriseDelay = settings.getInt(SURPRISE_DELAY,1000);
+    triggerDist = settings.getInt(TRIGGER_DIST, 16);
+    catchDist = settings.getInt(CATCH_DIST, 16);
+    runDist = settings.getInt(RUN_DIST, 16);
+    offsetX = settings.getInt(OFFSETX, 0);
+    offsetY = settings.getInt(OFFSETY, 0);
 
-		minDelay=getDelay(MAX_FRAMERATE);
-		runDelay=getDelay(RUN_FRAMERATE);
-		sitDelay=getDelay(SIT_FRAMERATE);
-		scratchDelay=getDelay(SCRATCH_FRAMERATE);
-		sharpenDelay=getDelay(SHARPEN_FRAMERATE);
-		loadDelay=getDelay(LOAD_FRAMERATE);
+    sleepDelay = settings.getInt(SLEEP_DELAY, 1000);
+    yawnDelay = settings.getInt(YAWN_DELAY, 1000);
+    surpriseDelay = settings.getInt(SURPRISE_DELAY, 1000);
 
-	}
+    minDelay = getDelay(MAX_FRAMERATE);
+    runDelay = getDelay(RUN_FRAMERATE);
+    sitDelay = getDelay(SIT_FRAMERATE);
+    scratchDelay = getDelay(SCRATCH_FRAMERATE);
+    sharpenDelay = getDelay(SHARPEN_FRAMERATE);
+    loadDelay = getDelay(LOAD_FRAMERATE);
 
+    doRandMov = settings.getInt(DO_RANDOM_MOV, 0);
+    randSleepTime = settings.getInt(RANDOM_MIN_SLEEP, 0);
+    randSleepWindow = settings.getInt(DO_RANDOM_MOV, 0);
+  }
 }

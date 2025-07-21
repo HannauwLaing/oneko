@@ -137,7 +137,8 @@ public class Neko {
   }
 
   private void imageClicked(MouseEvent evt) {
-    setWindowMode(!controller.getWindowMode());
+    controller.resetRandMovCounter();
+    // setWindowMode(!controller.getWindowMode());
   }
 
   /**

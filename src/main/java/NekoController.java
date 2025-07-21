@@ -27,6 +27,7 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -72,7 +73,8 @@ public class NekoController {
 	private Rectangle nekoBounds = new Rectangle();
 	private Timer timer;
 	private int w,h; // size of icons
-
+	private int randomMoveCounter;
+	private int prevX, prevY;
 	//
 	// UI Components
 	private JWindow invisibleWindow;
@@ -92,6 +94,7 @@ public class NekoController {
 		this.init=0;
 		this.state=0;
 		this.slp=0;
+		this.randomMoveCounter=0;
 
 		loadKitten();
 		w=image[1].getIconWidth();
@@ -165,9 +168,22 @@ public class NekoController {
 	/** Locates the mouse on the screen and determines what the cat shall do. */
 	public void locateMouseAndAnimateCat() {
 		PointerInfo pointerInfo = MouseInfo.getPointerInfo();
-		if (pointerInfo==null) return;
-		Point mouseLocation = pointerInfo.getLocation();
-		if (mouseLocation==null) return;
+		
+		Point mouseLocation;
+		if (settings.getDoRandMov() == 0) {
+			if (pointerInfo==null) return;
+			mouseLocation = pointerInfo.getLocation();
+			if (mouseLocation==null) return;
+			
+		} else {
+			if (this.randomMoveCounter-- <= 0) {
+				Random rand = new Random();
+				this.randomMoveCounter = rand.nextInt(settings.getRandSleepWindow()) + settings.getRandSleepTime();
+				this.prevX = rand.nextInt(nekoBounds.width) + nekoBounds.x;
+		        this.prevY= rand.nextInt(nekoBounds.height) + nekoBounds.y;
+			}
+			mouseLocation =  new Point(this.prevX, this.prevY);
+		}
 
 		int mx = mouseLocation.x + settings.getOffsetX();
 		int my = mouseLocation.y + settings.getOffsetY();
@@ -470,6 +486,7 @@ public class NekoController {
 	public void setWindowMode(boolean windowed) {
 		this.windowMode=windowed;
 	}
+	public void resetRandMovCounter() { this.randomMoveCounter = 0; }
 
 	public void moveCatInBox() {
 		if ( windowMode ) {
