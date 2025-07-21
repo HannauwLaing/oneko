@@ -3,8 +3,8 @@
  *
  * Copyright (c) 2019 Jerry Reno
  * This is public domain software, under the terms of the UNLICENSE
- * http://unlicense.org 
- * 
+ * http://unlicense.org
+ *
  * This is an extended version of the earlier Java Neko 1.0:
  * Copyright (c) 2010 Werner Randelshofer
  * Hausmatt 10, Immensee, CH-6405, Switzerland.
@@ -56,117 +56,113 @@ import javax.swing.WindowConstants;
  */
 public class Neko {
 
-	//
-	//Constants
-	private static Dimension MINSIZE=new Dimension(64,64);
-	private static Dimension PRFSIZE=new Dimension(64*16,64*9);
+  //
+  // Constants
+  private static Dimension MINSIZE = new Dimension(64, 64);
+  private static Dimension PRFSIZE = new Dimension(64 * 16, 64 * 9);
 
-	//
-	// UI Components
-	private JFrame catbox;
-	private JWindow invisibleWindow;
-	private JLabel freeLabel,boxLabel;
-	private NekoSettings settings;
-	private NekoController controller;
+  //
+  // UI Components
+  private JFrame catbox;
+  private JWindow invisibleWindow;
+  private JLabel freeLabel, boxLabel;
+  private NekoSettings settings;
+  private NekoController controller;
 
-	/** Creates new form Neko */
-	public Neko() {
-		settings=new NekoSettings();
-		initComponents();
-		invisibleWindow.setLocation(100,100);
-		controller=new NekoController(settings,invisibleWindow,catbox,freeLabel,boxLabel);
-		setWindowMode(false);
-	}
+  /** Creates new form Neko */
+  public Neko() {
+    settings = new NekoSettings();
+    initComponents();
+    invisibleWindow.setLocation(100, 100);
+    controller = new NekoController(settings, invisibleWindow, catbox,
+                                    freeLabel, boxLabel);
+    setWindowMode(false);
+  }
 
-	/** This method is called from within the constructor to
-	 * initialize the form.
-	 */
-	private void initComponents() {
-		String title=settings.getTitle();
-		if ( title==null ) title="Neko";
-		catbox=new JFrame(title);
-		catbox.setBackground(new Color(200,200,200,255));
-		catbox.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		invisibleWindow=new JWindow();
-		invisibleWindow.getRootPane().putClientProperty("Window.shadow", false);
-		invisibleWindow.setBackground(new Color(200,200,200,0)); // transparent, light grey of not supported
-		invisibleWindow.setAlwaysOnTop(true);
+  /**
+   * This method is called from within the constructor to
+   * initialize the form.
+   */
+  private void initComponents() {
+    String title = settings.getTitle();
+    if (title == null)
+      title = "Neko";
+    catbox = new JFrame(title);
+    catbox.setBackground(new Color(200, 200, 200, 255));
+    catbox.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    invisibleWindow = new JWindow();
+    invisibleWindow.getRootPane().putClientProperty("Window.shadow", false);
+    invisibleWindow.setBackground(new Color(
+        200, 200, 200, 0)); // transparent, light grey of not supported
+    invisibleWindow.setAlwaysOnTop(true);
 
-		freeLabel = new JLabel();
-		boxLabel = new JLabel();
+    freeLabel = new JLabel();
+    boxLabel = new JLabel();
 
-		MouseListener mouseMoveListener = new MouseAdapter() {
-			public void mouseClicked(MouseEvent evt) {
-				if ((evt.getSource() == freeLabel)||(evt.getSource() == boxLabel)) {
-					imageClicked(evt);
-				}
-			}
-		};
+    MouseListener mouseMoveListener = new MouseAdapter() {
+      public void mouseClicked(MouseEvent evt) {
+        if ((evt.getSource() == freeLabel) || (evt.getSource() == boxLabel)) {
+          imageClicked(evt);
+        }
+      }
+    };
 
-		freeLabel.addMouseListener(mouseMoveListener);
-		boxLabel.addMouseListener(mouseMoveListener);
-		invisibleWindow.getContentPane().add(freeLabel, BorderLayout.CENTER);
-		catbox.getContentPane().add(boxLabel);
-		catbox.pack();
+    freeLabel.addMouseListener(mouseMoveListener);
+    boxLabel.addMouseListener(mouseMoveListener);
+    invisibleWindow.getContentPane().add(freeLabel, BorderLayout.CENTER);
+    catbox.getContentPane().add(boxLabel);
+    catbox.pack();
 
-		// We really don't want a layout manager messing with us.
-		// Maybe this class should BE a layout manager.
-		catbox.getContentPane().setLayout(new LayoutManager() {
-			public void addLayoutComponent(String n,Component c) {}
-			public void layoutContainer(Container p){}
-			public Dimension minimumLayoutSize(Container p) { return MINSIZE;}
-			public Dimension preferredLayoutSize(Container p) { return PRFSIZE;}
-			public void removeLayoutComponent(Component c) {}
-		});
+    // We really don't want a layout manager messing with us.
+    // Maybe this class should BE a layout manager.
+    catbox.getContentPane().setLayout(new LayoutManager() {
+      public void addLayoutComponent(String n, Component c) {}
+      public void layoutContainer(Container p) {}
+      public Dimension minimumLayoutSize(Container p) { return MINSIZE; }
+      public Dimension preferredLayoutSize(Container p) { return PRFSIZE; }
+      public void removeLayoutComponent(Component c) {}
+    });
 
-		catbox.addComponentListener(new ComponentAdapter() {
-			public void componentMoved(ComponentEvent e) {
-				controller.catboxMoved();
-			}
-		});
-		catbox.addWindowListener(new WindowAdapter() {
-			public void windowDeiconified(WindowEvent e) {
-				controller.catboxDeiconified();
-			}
-		});
+    catbox.addComponentListener(new ComponentAdapter() {
+      public void componentMoved(ComponentEvent e) { controller.catboxMoved(); }
+    });
+    catbox.addWindowListener(new WindowAdapter() {
+      public void windowDeiconified(WindowEvent e) {
+        controller.catboxDeiconified();
+      }
+    });
 
-		invisibleWindow.pack();
-	}
+    invisibleWindow.pack();
+  }
 
-	private void imageClicked(MouseEvent evt) {
-		setWindowMode(!controller.getWindowMode());
-	}
+  private void imageClicked(MouseEvent evt) {
+    setWindowMode(!controller.getWindowMode());
+  }
 
-	/**
-	 * @param args the command line arguments
-	 */
-	public static void main(String args[]) {
-		EventQueue.invokeLater(new Runnable() {
+  /**
+   * @param args the command line arguments
+   */
+  public static void main(String args[]) {
+    EventQueue.invokeLater(new Runnable() {
+      public void run() { new Neko(); }
+    });
+  }
 
-			public void run() {
-				new Neko();
-			}
-		});
-	}
+  public void setWindowMode(boolean windowed) {
+    controller.setWindowMode(windowed);
+    settings.load();
+    if (windowed) {
+      String title = settings.getTitle();
+      if (title == null)
+        title = "Neko";
+      catbox.setTitle(title);
+      invisibleWindow.setVisible(false);
 
-	public void setWindowMode(boolean windowed)
-	{
-		controller.setWindowMode(windowed);
-		settings.load();
-		if (windowed) {
-			String title=settings.getTitle();
-			if ( title==null ) title="Neko";
-			catbox.setTitle(title);
-			invisibleWindow.setVisible(false);
-
-			catbox.setVisible(true);
-		}
-		else {
-			catbox.setVisible(false);
-			invisibleWindow.setVisible(true);
-		}
-		controller.moveCatInBox();
-	}
-
+      catbox.setVisible(true);
+    } else {
+      catbox.setVisible(false);
+      invisibleWindow.setVisible(true);
+    }
+    controller.moveCatInBox();
+  }
 }
-
