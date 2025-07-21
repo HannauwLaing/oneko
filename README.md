@@ -1,18 +1,15 @@
-#oneko (Wayland-Friendly Fork)
+oneko (Wayland-Friendly Fork)
 =====
 
-This is a workaround for a bug on[glreno's original oneko](https://github.com/glreno/oneko).
+This is a workaround for a bug on [glreno's original oneko](https://github.com/glreno/oneko). When using wayland the program cant always get the mouse position due to security reasons.
 
-
-In this fork, the cat no longer follows the mouse directly. Instead, it:
-- Moves to **random screen positions**
-- Pauses for **random durations** between movements
+In this fork, the cat no longer follows the mouse directly. Instead it moves to **random position** and then sleeps for **random durations** between movements
 
 A `Makefile` is also included for easier compilation and execution.
 
 ---
 
-##Commands
+Commands
 =====
 
 ### Compile
@@ -28,11 +25,17 @@ make run
 
 ### Run and disown cat:
 ```bash
-make -C ~/path/to/oneko/ all 0<&- >/dev/null 2>&1 & disown ;
+make run-disown
+```
+```bash
+make -C ~/path/to/oneko/ all 0<&- >/dev/null 2>&1 & disown;
 ```
 ### Kill all disowned cats:
 ```bash
-pkill -f \"^java -cp bin NekoMain$\";clear; echo \"Cats have been purged\
+make purge
+```
+```bash
+pkill -f "java -cp bin NekoMain"; echo "Cats have been purged";
 ```
 
 links
