@@ -185,6 +185,7 @@ public class NekoController {
 		PointerInfo pointerInfo = MouseInfo.getPointerInfo();
 
 		Point mouseLocation;
+		// System.out.println("Move counter:" + this.randomMoveCounter);
 		if (settings.getDoRandMov() == 0) {
 			if (pointerInfo == null)
 				return;
@@ -196,6 +197,10 @@ public class NekoController {
 			if (this.randomMoveCounter-- <= 0) {
 				Random rand = new Random();
 				this.randomMoveCounter = rand.nextInt(settings.getRandSleepWindow()) + settings.getRandSleepTime();
+				// System.out.println("Move counter:" + this.randomMoveCounter);
+				// System.out.println("Sleep window:" + settings.getRandSleepWindow());
+				// System.out.println("Sleep Time:" + settings.getRandSleepTime());
+
 				int newX = this.prevX;
 				int newY = this.prevY;
 				// Bounds is X:1300 and Y:700
