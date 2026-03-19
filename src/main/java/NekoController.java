@@ -96,7 +96,7 @@ public class NekoController {
 		this.boxLabel = boxed;
 		this.windowMode = false;
 
-		this.init = 0;
+		this.init = 32;
 		this.state = 0;
 		this.slp = 0;
 		this.randomMoveCounter = 0;
@@ -277,10 +277,11 @@ public class NekoController {
 				doMove = true;
 				// tells the user the program is testing the images, and tells them
 				// when the test is done.
-				slp = settings.getLoadDelay();
+				// slp = settings.getLoadDelay();
+				slp = 0;
 				ox = nekoBounds.x + nekoBounds.width / 2;
 				oy = nekoBounds.y + nekoBounds.height / 2;
-				no = init;
+				no = 0;
 				init++;
 			} else {
 				state = 1;

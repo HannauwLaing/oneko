@@ -30,6 +30,12 @@ make run-disown
 ```bash
 make -C ~/path/to/oneko/ all 0<&- >/dev/null 2>&1 & disown;
 ```
+
+### Compile and run with debian:
+```bash
+make install-with-deb
+```
+
 ### Kill all disowned cats:
 ```bash
 make purge
